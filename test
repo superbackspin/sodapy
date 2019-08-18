@@ -1,0 +1,32 @@
+#!/usr/bin/env python
+
+import pandas as pd
+import numpy as np
+from sodapy import Socrata
+from discord_webhook import DiscordWebhook, DiscordEmbed
+
+
+client = Socrata("www.dallasopendata.com", "7ja8trWwzpCHLr2ZYcjquwYSM", username="hereinamerica@gmail.com", password="Alive10142000")
+
+client.datasets(limit=1000)
+results = client.get("9fxf-t2tr", limit=200)
+
+results_df = pd.DataFrame.from_records(results)
+
+df = df[['Block', 'Street', 'Nature of Call', 'status']]
+
+webhook = DiscordWebhook(url='https://discordapp.com/api/webhooks/612335933500555269/sDehkWMU4F6W1Xj5I4lA2RDDi2e9z-W1pODcQDYFKJh_khMEGvc5JfJ1LJzYqmYC6kha', username="Deep Test")
+embed = DiscordEmbed(title='DPD Active Calls', description='Active Calls for Beat 153', color=242424)
+embed.set_author(name='DPD Bot', url='https://www.dallasopendata.com/resource/59ws-biar.json', icon_url='https://avatars0.githubusercontent.com/u/14542790')
+embed.set_footer(text='Embed Footer Text')
+embed.set_timestamp()
+embed.add_embed_field(name='Block', value='Block')
+embed.add_embed_field(name='Street', value='dolor sit')
+embed.add_embed_field(name='Nature of Call', value='amet consetetur')
+embed.add_embed_field(name='Status', value='sadipscing elitr')
+embed.add_embed_field(name='Incident #', value='sadipscing elitr')
+embed.add_embed_field(name='Priority', value='sadipscing elitr')
+
+webhook.add_embed(embed)
+webhook.execute()
+    
